@@ -1,7 +1,8 @@
 # MiniVue
 
 ## 介绍
-Mini vue3
+
+基于Vue3实现最简单的mini-vue
 
 
 ## 本地运行

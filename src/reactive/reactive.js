@@ -39,7 +39,7 @@ export function reactive(target) {
       const oldValue = target[key];
       const res = Reflect.set(target, key, value, receiver);
       if (hasChanged(oldValue, value)) {
-        //发生改变
+        //发生改变--触发依赖
         trigger(target, key);
         //处理代理数组
         if (isArray(target) && hasChanged(oldLength, target.length)) {
