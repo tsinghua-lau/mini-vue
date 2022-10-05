@@ -1,0 +1,35 @@
+1.Reflect目的
+    （1）语义的目的，代表执行被代理对象原始的行为
+    （2）第三个参数有设置this的功能
+    （3）再代理对象再次被代理时，行为不一样。。。还不太明白
+
+2.weakmap
+
+3.muted
+
+4.props为什么要shallowReactive?
+
+5.列表的props到底可不可以直接改
+
+6.substr slice
+
+7.正则的\r\n\t\f空格  为什么不用\s替代?
+因为&nbsp;并不是空字符串，而是String.fromCharCode(160)，这个字符包含在\s中，却是希望不被压缩的
+
+8.必须用with，不能简单添加ctx前缀的原因
+
+9.为什么生成的渲染函数要加下划线?
+
+10.ctx需要reactive吗
+
+todo:
+.watchEffect                       不做了，effect基本能替代
+.todomvc bug
+
+feature:
+. v-on 只支持 @click="foo", @click="foo($event,id):两种
+. 不支持class, style动静合并
+. 没有unref，模板内所有ref也必须写value
+. v-model不支持select，不支持component
+.添加，for in，还没有响应式
+.template

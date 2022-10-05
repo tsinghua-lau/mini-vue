@@ -1,12 +1,9 @@
-
-import {reactive} from './reactive/reactive';
-import { effect } from './reactive/effect';
-const observed = (window.observed = reactive({
-    count: 0,
-}));
-effect(()=>{
-    console.log('observed.count is ==>',observed.count);
-})
+/******/ (() => { // webpackBootstrap
+var __webpack_exports__ = {};
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+console.log(1);
 // import { compile } from './compiler/compile';
 // import {
 //   createApp,
@@ -37,3 +34,6 @@ effect(()=>{
 //   effect,
 //   compile,
 // });
+
+/******/ })()
+;
