@@ -1,13 +1,16 @@
+const effectStack = [];//处理effect嵌套effect
 let activeEffect; //记录当前正在执行的副作用函数
 export function effect(fn) {
   const effectFn = () => {
     try {
       activeEffect = effectFn;
+      effectStack.push(activeEffect);
       return fn();
     } finally {
-      //todo
       //执行完成后还原
-      activeEffect = undefined;
+      effectStack.pop();
+      //activeEffect = undefined;
+      activeEffect = effectStack[effectStack.length - 1];
     }
   };
   effectFn();
