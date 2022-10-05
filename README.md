@@ -4,6 +4,8 @@
 
 基于Vue3实现最简单的mini-vue
 
+## 控制台reactive
+src/index.js
 
 ## 本地运行
 
