@@ -12,3 +12,8 @@ export function hasChanged(oldValue, value) {
 export function isArray(target){
     return Array.isArray(target);
 }
+
+
+export function isFunction(target){
+  return typeof target === 'function'
+}
