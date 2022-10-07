@@ -1,5 +1,7 @@
 const effectStack = []; //处理effect嵌套effect
 let activeEffect; //记录当前正在执行的副作用函数
+// options 如果 lazy 为 true 初始化时不立即执行，去执行调度函数scheduler ，
+//触发trigger返回当前值。当依赖的响应式数据变化时执行。
 export function effect(fn, options = {}) {
   const effectFn = () => {
     try {
@@ -51,8 +53,10 @@ export function trigger(target, key) {
   }
   deps.forEach((effectFn) => {
     if (effectFn.scheduler) {
-      effectFn.scheduler(effectFn)
+      //有调度程序优先执行scheduler
+      effectFn.scheduler(effectFn);
     } else {
+     //否则执行副作用函数
       effectFn();
     }
   });

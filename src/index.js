@@ -30,17 +30,17 @@ import {computed} from './reactive/computed'
 
 
 //ref
-const foo = (window.foo = ref(1));
-effect(()=>{
-  console.log('foo==>',foo.value);
-})
+// const foo = (window.foo = ref(1));
+// effect(()=>{
+//   console.log('foo==>',foo.value);
+// })
 
-//computed
-// const num  = (window.num = ref(0));
-// const c = (window.c = computed(()=>{
-//   console.log('caclulate c.value');
-//   return num.value*2;
-// }));
+// computed
+const num  = (window.num = ref(0));
+const c = (window.c = computed(()=>{
+  console.log('caclulate c.value');
+  return num.value*2;
+}));
 
 
 // const num  = (window.num = ref(0));
