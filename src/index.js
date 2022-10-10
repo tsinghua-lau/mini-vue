@@ -1,7 +1,8 @@
 import { reactive } from './reactive/reactive';
 import { effect } from './reactive/effect';
 import { ref } from './reactive/ref';
-import {computed} from './reactive/computed'
+import { computed } from './reactive/computed';
+import { render, h, Text, Fragment } from './runtime';
 // const observed = (window.observed = reactive({
 //   count: 0,
 // }));
@@ -28,7 +29,6 @@ import {computed} from './reactive/computed'
 //   console.log('count1 is ==>', observed.count1);
 // });
 
-
 //ref
 // const foo = (window.foo = ref(1));
 // effect(()=>{
@@ -36,12 +36,11 @@ import {computed} from './reactive/computed'
 // })
 
 // computed
-const num  = (window.num = ref(0));
-const c = (window.c = computed(()=>{
-  console.log('caclulate c.value');
-  return num.value*2;
-}));
-
+// const num  = (window.num = ref(0));
+// const c = (window.c = computed(()=>{
+//   console.log('caclulate c.value');
+//   return num.value*2;
+// }));
 
 // const num  = (window.num = ref(0));
 // const c = (window.c = computed({
@@ -54,3 +53,31 @@ const c = (window.c = computed(()=>{
 //   num.value = newVal;
 //  }
 // }));
+
+const vnode = h(
+  'div',
+  {
+    class: 'a b',
+    style: {
+      border: '1px solid',
+      fontSize: '14px',
+    },
+    onClick: () => console.log('click'),
+    id: 'foo',
+    checked: '',
+    custom: false,
+  },
+  [
+    h('ul', null, [
+      h('li', { style: { color: 'red' } }, 1),
+      h('li', null, 2),
+      h('li', { style: { color: 'blue' } }, 3),
+      h(Fragment, null, [h('li', null, '4'), h('li')]),
+      h('li', null, [h(Text, null, 'hello world')]),
+    ]),
+  ]
+);
+
+setTimeout(() => {
+  render(vnode, document.body);
+}, 1000);

@@ -2,7 +2,6 @@ import { isFunction } from '../untils';
 import { effect, track, trigger } from './effect';
 export function computed(getterOrOption) {
   let getter, setter;
-  debugger
   if (isFunction(getterOrOption)) {
     getter = getterOrOption;
     setter = () => {
