@@ -15,7 +15,6 @@ function mount(vnode, container) {
   } else if (shapeFlag & ShapeFlags.TEXT) {
     mountTextNode(vnode, container);
   } else if (shapeFlag & ShapeFlags.FRAGMENT) {
-    debugger
     mountFragment(vnode, container);
   } else {
     mountComponent(vnode, container);
