@@ -61,6 +61,7 @@ const vnode = h(
     style: {
       border: '1px solid',
       fontSize: '14px',
+      width: '500px',
     },
     onClick: () => console.log('click'),
     id: 'foo',
