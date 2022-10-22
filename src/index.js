@@ -101,11 +101,11 @@ render(
 setTimeout(() => {
   render(
     h('ul',null,[
-      h('li',null,'first'),
+      h('li',null,'first---更新'),
       h(Fragment,null,[
-        h('li',null,'middle')
+        h('li',null,'middle---新增')
       ]),
-      h('li',null,'last')
+      h('li',null,'last---更新')
     ]),
     document.body
   ) 
