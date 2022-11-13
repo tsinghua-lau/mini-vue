@@ -9,11 +9,13 @@ src/index.js
 
 ## reactivity
 
-- [x] reactive 的实现
+- [x] reactive 实现
 - [x] track 依赖收集
 - [x] trigger 触发依赖
-- [x] ref 的实现
-- [x] computed 的实现
+- [x] ref 实现
+- [x] computed 实现
+- [x] vnode 挂载
+- [x] patch 更新节点
 
 
 ## 本地运行
