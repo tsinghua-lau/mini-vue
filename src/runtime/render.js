@@ -140,6 +140,10 @@ function mountTextNode(vnode, container, anchor) {
  */
 function mountElement(vnode, container, anchor) {
   const { type, props, shapeFlag, children } = vnode;
+  console.log(type, 111);
+  if (typeof type == 'symbol') {
+    return;
+  }
   const el = document.createElement(type);
   // mountProps(props, el);
   patchProps(el, null, props);
@@ -261,29 +265,113 @@ function patchUnkeyedChildren(c1, c2, container, anchor) {
 }
 
 /**
- * 通过key来对比节点更新
+ * 通过key来对比节点更新 --react方法
  * @param {*} c1
  * @param {*} c2
  * @param {*} container
  * @param {*} anchor
  */
-function patchKeyedChildren(c1, c2, container, anchor) {
+function patchKeyedChildren2(c1, c2, container, anchor) {
+  const map = new map();
+  c1.forEach((prev, j) => {
+    map.set(prev.key, { prev, j });
+  });
+  let maxNewIndexSoFar = 0;
   for (let i = 0; i < c2.length; i++) {
     const next = c2[i];
-    for (let j = 0; j < c1.length; j++) {
-      const prev = c1[i];
-      if (next.key === prev.key) {
-        patch(prev, next, container, anchor);
-        // const curAnchor = c1[0].el;
-        const curAnchor = c2[i - 1].el.nextSibling;
-        //TODO
+    const curAnchor = i === 0 ? c1[0].e : c2[i - 1].el.nextSibling;
+
+    if (map.has(next.key)) {
+      //找到了
+      const { prev, j } = map.get(next.key);
+      patch(prev, next, container, anchor);
+      if (j < maxNewIndexSoFar) {
+        //move
+        //  const curAnchor = i === 0 ? c1[0].e : c2[i - 1].el.nextSibling;
         // 若干el为新节点执行插入操作，如果已经存在的节点，执行移动操作
-        container.insertBefore(next.el, anchor);
-        break;
+        container.insertBefore(next.el, curAnchor);
+      } else {
+        maxNewIndexSoFar = j;
       }
+      map.delete(next.key);
+    } else {
+      patch(null, next, curAnchor);
     }
+    map.forEach(({ prev }) => {
+      unmount(prev);
+    });
+
+    // let find = false;
+    // for (let j = 0; j < c1.length; j++) {
+    //   const prev = c1[i];
+    //   if (next.key === prev.key) {
+    //     find = true;
+    //     patch(prev, next, container, anchor);
+    //     if (j < maxNewIndexSoFar) {
+    //       //move
+    //       //  const curAnchor = i === 0 ? c1[0].e : c2[i - 1].el.nextSibling;
+    //       const curAnchor = c2[i - 1].el.nextSibling;
+    //       // 若干el为新节点执行插入操作，如果已经存在的节点，执行移动操作
+    //       container.insertBefore(next.el, curAnchor);
+    //     } else {
+    //       maxNewIndexSoFar = j;
+    //     }
+    //     // const curAnchor = c1[0].el;
+    //     // const curAnchor = c2[i - 1].el.nextSibling;
+
+    //     break;
+    //   }
+    // }
+    // if (!find) {
+    //   const curAnchor = i === 0 ? c1[0].e : c2[i - 1].el.nextSibling;
+    //   patch(null, next, curAnchor);
+    // }
+  }
+
+  // for (let i = 0; i < c1.length; i++) {
+  //   const prev = c1[i];
+  //   const item = c2.find((next)=>next.key===prev.key)
+  //   if(!item){
+  //     //如果没找到
+  //     unmount(prev);
+  //   }
+  // }
+}
+
+function patchKeyedChildren(c1, c2, container, anchor) {
+  let i = 0;
+  let e1 = c1.length - 1;
+  let e2 = c2.length - 1;
+  //1.从左到右依次比对
+  while (i <= e1 && i <= e2 && c1[i].key === ce[i].key) {
+    patch(c1[i], ce[i], container, anchor && c1[i].key == ce[i].key);
+    i++;
+  }
+
+  //2.从右到左依次对比
+  while (i <= e1 && i <= e2 && c1[e1].key === ce[e2].key) {
+    patch(c1[e1], c2[e2], container, anchor);
+    e1--;
+    e2--;
+  }
+
+  //3.  经过1、2直接将旧节点比对完，则将剩下的新节点直接mount,此时i>e1
+  if (i > e1) {
+    for (let j = i; j <= e2; j++) {
+      const nextPos = e2 + 1;
+      const curAnchor = (ce[nextPos] && c2[nextPos].el) || anchor;
+      patch(null, ce[j], container, anchor);
+    }
+  } else if (i > e2) {
+    //3.经过1、2直接将新节点比对完，则剩下的旧节点直接unmount
+    for (let j = i; j <= e1; j++) {
+      unmount(c1[j]);
+    }
+  } else {
+    //TODO
   }
 }
+
 function patchChildren2(n1, n2, container) {
   const { shapeFlag: prevShapeFlag, children: c1 } = n1;
   const { shapeFlag, children: c2 } = n2;
