@@ -3,13 +3,13 @@ import { effect } from './reactive/effect';
 import { ref } from './reactive/ref';
 import { computed } from './reactive/computed';
 import { render, h, Text, Fragment } from './runtime';
-// const observed = (window.observed = reactive({
-//   count: 0,
-// }));
-// effect(() => {
-//   console.log('observed.count is ==>', observed.count);
-// });
-
+const observed = (window.observed = reactive({
+  count: 0,
+}));
+effect(() => {
+  console.log('observed.count is ==>', observed.count);
+});
+//reactive--测试用例
 // const observed = (window.observed = reactive([1,2,3]));
 // effect(()=>{
 //     console.log('index 4 is ==>',observed[4]);
@@ -29,13 +29,13 @@ import { render, h, Text, Fragment } from './runtime';
 //   console.log('count1 is ==>', observed.count1);
 // });
 
-//ref
+//ref-测试用例
 // const foo = (window.foo = ref(1));
 // effect(()=>{
 //   console.log('foo==>',foo.value);
 // })
 
-// computed
+// computed-测试用例
 // const num  = (window.num = ref(0));
 // const c = (window.c = computed(()=>{
 //   console.log('caclulate c.value');
@@ -55,38 +55,38 @@ import { render, h, Text, Fragment } from './runtime';
 // }));
 
 
-//Vnode&mount
-const vnode = h(
-  'div',
-  {
-    class: 'a b',
-    style: {
-      border: '1px solid',
-      fontSize: '14px',
-      width: '500px',
-    },
-    onClick: () => console.log('click'),
-    id: 'foo',
-    checked: '',
-    custom: false,
-  },
-  [
-    h('ul', null, [
-      h('li', { style: { color: 'red' } }, 1),
-      h('li', null, 2),
-      h('li', { style: { color: 'blue' } }, 3),
-      h(Fragment, null, [h('li', null, '4'), h('li')]),
-      h('li', null, [h(Text, null, 'hello world')]),
-    ]),
-  ]
-);
+//Vnode&mount-测试用例
+// const vnode = h(
+//   'div',
+//   {
+//     class: 'a b',
+//     style: {
+//       border: '1px solid',
+//       fontSize: '14px',
+//       width: '500px',
+//     },
+//     onClick: () => console.log('click'),
+//     id: 'foo',
+//     checked: '',
+//     custom: false,
+//   },
+//   [
+//     h('ul', null, [
+//       h('li', { style: { color: 'red' } }, 1),
+//       h('li', null, 2),
+//       h('li', { style: { color: 'blue' } }, 3),
+//       h(Fragment, null, [h('li', null, '4'), h('li')]),
+//       h('li', null, [h(Text, null, 'hello world')]),
+//     ]),
+//   ]
+// );
 
-setTimeout(() => {
-  render(vnode, document.body);
-}, 1000);
+// setTimeout(() => {
+//   render(vnode, document.body);
+// }, 1000);
 
 
-//patch
+//patch-测试用例
 // setTimeout(() => {
 // render(
 //   h('ul',null,[
